@@ -16,7 +16,7 @@ class DataManager:
         self.destination_data = {}
         
     def get_destination_data(self):
-        response = requests.get(url=SHEETY_GET_END)
+        response = requests.get(url=SHEETY_END)
         data = response.json()
         
         self.destination_data = data["Flights"]

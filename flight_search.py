@@ -12,7 +12,7 @@ TOKEN_ENDPOINT = "https://test.api.amadeus.com/v1/security/oauth2/token"
 class FlightSearch:
     def __init__(self):
         self._api_key = os.environ["Amadeus_Key"]
-        self._api_secret = os.environ["Amadeus_Secred"]
+        self._api_secret = os.environ["Amadeus_Secret"]
         self._token = self._get_new_token()
         
     def _get_new_token(self):

@@ -19,7 +19,7 @@ class DataManager:
         response = requests.get(url=SHEETY_END)
         data = response.json()
         
-        self.destination_data = data["Flights"]
+        self.destination_data = data["flights"]
         
         return self.destination_data
     
@@ -27,7 +27,7 @@ class DataManager:
     def update_destination_codes(self):
         for city in self.destination_data:
             new_data = {
-                "price": {
+                "flight": {
                     "iataCode": city["iataCode"]
                 }
             }

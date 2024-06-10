@@ -1,10 +1,11 @@
 class FlightData:
-    def __init__(self, price, origin_airport, destination_airport, out_date, return_date):
+    def __init__(self, price, origin_airport, destination_airport, out_date, return_date, carrier):
         self.price = price
         self.origin_airport = origin_airport
         self.destination_airport = destination_airport
         self.out_date = out_date
         self.return_date = return_date
+        self.carrier = carrier
         
     def find_cheap_flights(data):
         if data is None or not data['data']:
@@ -17,8 +18,9 @@ class FlightData:
         destination = first_flight["itineraries"][0]["segments"][0]["arrival"]["iataCode"]
         out_date = first_flight["itineraries"][0]["segments"][0]["departure"]["at"].split("T")[0]
         return_date = first_flight["itineraries"][1]["segments"][0]["departure"]["at"].split("T")[0]
+        carrier = first_flight["itineraries"][0]["segments"][0]["carrierCode"]
         
-        cheapest_flight = FlightData(lowest_price, origin, destination, out_date, return_date)
+        cheapest_flight = FlightData(lowest_price, origin, destination, out_date, return_date, carrier)
         
         for flight in data["data"]:
             price = float(flight["price"]["grandTotal"])
@@ -28,5 +30,6 @@ class FlightData:
                 destination = flight["itineraries"][0]["segments"][0]["arrival"]["iataCode"]
                 out_date = flight["itineraries"][0]["segments"][0]["departure"]["at"].split("T")[0]
                 return_date = flight["itineraries"][1]["segments"][0]["departure"]["at"].split("T")[0]
-                cheapest_flight = FlightData(lowest_price, origin, destination, out_date, return_date)
+                carrier = flight["itineraries"][0]["segments"][0]["carrierCode"]
+                cheapest_flight = FlightData(lowest_price, origin, destination, out_date, return_date, carrier)
         return cheapest_flight

@@ -30,6 +30,25 @@ class FlightSearch:
         
         return response.json()['access_token']
     
+    def get_carrier_name(self, carrier):
+        carrier_endpoint = "https://test.api.amadeus.com/v1/reference-data/airlines"
+        headers = {
+            "Authorization": f"Bearer {self._token}"
+        }
+        query = {
+            "airlineCodes": carrier
+        }
+        response = requests.get(url=carrier_endpoint, headers=headers, params=query)
+        try:
+            carrier_name = response.json()["data"][0]["commonName"]
+        except IndexError:
+            print(f"IndexError: No Airline code found for {carrier}")
+            return "N/A"
+        except KeyError:
+            print(f"KeyError: No airpline code found for {carrier}")
+            return "Not found"
+        return carrier_name
+    
     def get_destination_code(self, city_name):
         headers = {
             "Authorization": f"Bearer {self._token}"
@@ -63,7 +82,7 @@ class FlightSearch:
             "returnDate": to_time.strftime("%Y-%m-%d"),
             "adults": 1,
             "nonStop": "true",
-            "currencyCode": "GBP",
+            "currencyCode": "USD",
             "max": "10"            
         }
         

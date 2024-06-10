@@ -38,6 +38,7 @@ for destination in sheet_data:
     
     cheapest_flight = FlightData.find_cheap_flights(flights)
     if cheapest_flight.price != "N/A" and cheapest_flight.price < destination["lowestPrice"]:
-        message = f"Subject: Low price for {cheapest_flight.destination_airport}\n\nLow price alert! Only ${cheapest_flight.price} to fly \nfrom {cheapest_flight.origin_airport} to {cheapest_flight.destination_airport}, \non {cheapest_flight.out_date} until {cheapest_flight.return_date}."
+        carrier = flight_search.get_carrier_name(cheapest_flight.carrier)
+        message = f"Subject: Low price for {cheapest_flight.destination_airport}\n\nLow price alert! Only ${cheapest_flight.price} to fly \nfrom {cheapest_flight.origin_airport} to {cheapest_flight.destination_airport} on {carrier}, \non {cheapest_flight.out_date} until {cheapest_flight.return_date}."
         message = message.encode(encoding='ascii', errors='namereplace')
         notification_manager.send_message(message=message)
